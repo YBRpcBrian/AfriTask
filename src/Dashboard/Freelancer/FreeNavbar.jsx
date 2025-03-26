@@ -1,50 +1,56 @@
 import React, { useState } from "react";
 import Logo from "../../components/Logo";
-import { CiSettings } from "react-icons/ci";
-import { CgProfile } from "react-icons/cg";
-import { HiMenu, HiX } from "react-icons/hi"; // Icons for mobile menu
+import { Settings, Menu, X, UserCircle } from "lucide-react"; // Modern icons
 
 const FreeNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+    <nav className="bg-white shadow-lg px-6 py-4 flex justify-between items-center">
       {/* Logo */}
       <div className="flex items-center">
         <Logo />
       </div>
 
       {/* Menu Links (Desktop) */}
-      <ul className="hidden md:flex space-x-6 text-gray-700 font-medium">
-        <li className="hover:text-blue-600 cursor-pointer">Find Task</li>
-        <li className="hover:text-blue-600 cursor-pointer">Deliver Task</li>
-        <li className="hover:text-blue-600 cursor-pointer">Wallet</li>
+      <ul className="hidden md:flex space-x-8 text-gray-700 font-semibold text-lg">
+        <li className="hover:text-blue-600 transition duration-300 cursor-pointer">Find Task</li>
+        <li className="hover:text-blue-600 transition duration-300 cursor-pointer">Deliver Task</li>
+        <li className="hover:text-blue-600 transition duration-300 cursor-pointer">Wallet</li>
       </ul>
 
       {/* Profile & Settings (Desktop) */}
-      <div className="hidden md:flex items-center space-x-4 text-gray-700">
-        <CiSettings className="text-2xl cursor-pointer hover:text-blue-600" />
-        <CgProfile className="text-2xl cursor-pointer hover:text-blue-600" />
+      <div className="hidden md:flex items-center space-x-6 text-gray-700">
+        <Settings className="text-2xl cursor-pointer hover:text-blue-600 transition duration-300" />
+        <UserCircle className="text-2xl cursor-pointer hover:text-blue-600 transition duration-300" />
       </div>
 
       {/* Mobile Menu Button */}
       <button
-        className="md:hidden text-2xl text-gray-700"
+        className="md:hidden text-3xl text-gray-700"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {isOpen ? <HiX /> : <HiMenu />}
+        {isOpen ? <X /> : <Menu />}
       </button>
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white shadow-md flex flex-col items-center space-y-4 py-4 md:hidden">
-          <li className="hover:text-primary cursor-pointer">Find Task</li>
-          <li className="hover:text-primary cursor-pointer">Deliver Task</li>
-          <li className="hover:text-primary cursor-pointer">Wallet</li>
-          <div className="flex space-x-4 text-gray-700">
-            <CiSettings className="text-2xl cursor-pointer hover:text-primary" />
-            <CgProfile className="text-2xl cursor-pointer hover:text-primary" />
+        <div className="absolute top-16 left-0 w-full bg-white shadow-lg flex flex-col items-center space-y-4 py-6 rounded-lg md:hidden transition-all duration-300">
+          <li className="hover:text-blue-600 text-lg font-medium cursor-pointer">Find Task</li>
+          <li className="hover:text-blue-600 text-lg font-medium cursor-pointer">Deliver Task</li>
+          <li className="hover:text-blue-600 text-lg font-medium cursor-pointer">Wallet</li>
+
+          {/* User Info */}
+          <div className="flex items-center space-x-3 bg-gray-100 px-4 py-3 rounded-md shadow-md w-4/5">
+            <UserCircle className="text-4xl text-gray-700" />
+            <div>
+              <h1 className="text-gray-800 font-semibold">Yabiun Brian</h1>
+              <span className="text-gray-500 text-sm">Role: Freelancer</span>
+            </div>
           </div>
+
+          {/* Settings Icon */}
+          <Settings className="text-3xl text-gray-700 cursor-pointer hover:text-blue-600 transition duration-300" />
         </div>
       )}
     </nav>
