@@ -14,15 +14,15 @@ const FreeNavbar = () => {
 
       {/* Menu Links (Desktop) */}
       <ul className="hidden md:flex space-x-8 text-gray-700 font-semibold text-lg">
-        <li className="hover:text-blue-600 transition duration-300 cursor-pointer">Find Task</li>
-        <li className="hover:text-blue-600 transition duration-300 cursor-pointer">Deliver Task</li>
-        <li className="hover:text-blue-600 transition duration-300 cursor-pointer">Wallet</li>
+        <li className="hover:text-primary transition duration-300 cursor-pointer">Find Task</li>
+        <li className="hover:text-primary transition duration-300 cursor-pointer">Deliver Task</li>
+        <li className="hover:text-primary transition duration-300 cursor-pointer">Wallet</li>
       </ul>
 
       {/* Profile & Settings (Desktop) */}
       <div className="hidden md:flex items-center space-x-6 text-gray-700">
-        <Settings className="text-2xl cursor-pointer hover:text-blue-600 transition duration-300" />
-        <UserCircle className="text-2xl cursor-pointer hover:text-blue-600 transition duration-300" />
+        <Settings className="text-2xl cursor-pointer hover:text-primary transition duration-300" />
+        <UserCircle className="text-2xl cursor-pointer hover:text-primary transition duration-300" />
       </div>
 
       {/* Mobile Menu Button */}
@@ -36,9 +36,9 @@ const FreeNavbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="absolute top-16 left-0 w-full bg-white shadow-lg flex flex-col items-center space-y-4 py-6 rounded-lg md:hidden transition-all duration-300">
-          <li className="hover:text-blue-600 text-lg font-medium cursor-pointer">Find Task</li>
-          <li className="hover:text-blue-600 text-lg font-medium cursor-pointer">Deliver Task</li>
-          <li className="hover:text-blue-600 text-lg font-medium cursor-pointer">Wallet</li>
+          <li className="hover:text-primary text-lg font-medium cursor-pointer">Find Task</li>
+          <li className="hover:text-primary text-lg font-medium cursor-pointer">Deliver Task</li>
+          <li className="hover:text-primary text-lg font-medium cursor-pointer">Wallet</li>
 
           {/* User Info */}
           <div className="flex items-center space-x-3 bg-gray-100 px-4 py-3 rounded-md shadow-md w-4/5">
@@ -50,7 +50,7 @@ const FreeNavbar = () => {
           </div>
 
           {/* Settings Icon */}
-          <Settings className="text-3xl text-gray-700 cursor-pointer hover:text-blue-600 transition duration-300" />
+          <Settings className="text-3xl text-gray-700 cursor-pointer hover:text-primary transition duration-300" />
         </div>
       )}
     </nav>
