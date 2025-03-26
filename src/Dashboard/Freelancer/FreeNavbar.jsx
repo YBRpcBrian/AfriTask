@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Logo from "../../components/Logo";
 import { Settings, Menu, X, UserCircle } from "lucide-react"; // Modern icons
 
@@ -6,7 +7,7 @@ const FreeNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-white shadow-lg px-6 py-4 flex justify-between items-center">
+    <nav className="bg-white shadow-lg px-6 py-4 flex justify-between items-center relative">
       {/* Logo */}
       <div className="flex items-center">
         <Logo />
@@ -14,9 +15,15 @@ const FreeNavbar = () => {
 
       {/* Menu Links (Desktop) */}
       <ul className="hidden md:flex space-x-8 text-gray-700 font-semibold text-lg">
-        <li className="hover:text-primary transition duration-300 cursor-pointer">Find Task</li>
-        <li className="hover:text-primary transition duration-300 cursor-pointer">Deliver Task</li>
-        <li className="hover:text-primary transition duration-300 cursor-pointer">Wallet</li>
+        <li>
+          <Link to="/freelance/findtask" className="hover:text-primary transition duration-300">Find Task</Link>
+        </li>
+        <li>
+          <Link to="/freelance/delivertask" className="hover:text-primary transition duration-300">Deliver Task</Link>
+        </li>
+        <li>
+          <Link to="/freelance/wallet" className="hover:text-primary transition duration-300">Wallet</Link>
+        </li>
       </ul>
 
       {/* Profile & Settings (Desktop) */}
@@ -36,9 +43,9 @@ const FreeNavbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="absolute top-16 left-0 w-full bg-white shadow-lg flex flex-col items-center space-y-4 py-6 rounded-lg md:hidden transition-all duration-300">
-          <li className="hover:text-primary text-lg font-medium cursor-pointer">Find Task</li>
-          <li className="hover:text-primary text-lg font-medium cursor-pointer">Deliver Task</li>
-          <li className="hover:text-primary text-lg font-medium cursor-pointer">Wallet</li>
+          <Link to="/freelance/findtask" className="text-lg font-medium hover:text-primary transition duration-300">Find Task</Link>
+          <Link to="/freelance/delivertask" className="text-lg font-medium hover:text-primary transition duration-300">Deliver Task</Link>
+          <Link to="/freelance/wallet" className="text-lg font-medium hover:text-primary transition duration-300">Wallet</Link>
 
           {/* User Info */}
           <div className="flex items-center space-x-3 bg-gray-100 px-4 py-3 rounded-md shadow-md w-4/5">
