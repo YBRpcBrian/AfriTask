@@ -20,7 +20,7 @@ const DeliverTask = () => {
       />
       
       {/* Overlay */}
-      <div className="absolute  w-full h-full bg-black bg-opacity-50"></div>
+      <div className="absolute  w-full h-full bg-black/50 "></div>
 
       {/* Content */}
       <div className="w-full max-w-2xl mx-auto p-6 bg-white bg-opacity-90 backdrop-blur-md rounded-lg shadow-lg relative">
@@ -70,14 +70,14 @@ const DeliverTask = () => {
               onClick={handleComplete}
               disabled={!checked}
               className={`w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-white font-semibold transition ${
-                checked ? "bg-green-600 hover:bg-green-700" : "bg-gray-400 cursor-not-allowed"
+                checked ? "bg-primary hover:bg-primary-3" : "bg-gray-400 cursor-not-allowed"
               }`}
             >
               <CheckCircle size={20} />
               Mark as Done
             </button>
             <button
-              className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-white font-semibold bg-red-500 hover:bg-red-600 transition"
+              className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-primary border border-primary font-semibold bg-white hover:bg-primary hover:text-white transition"
             >
               <XCircle size={20} />
               Cancel

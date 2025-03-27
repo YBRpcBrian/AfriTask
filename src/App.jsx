@@ -14,9 +14,9 @@ function App() {
   return (
     <Router>
       {/* Navbar stays visible across all pages */}
-      <ClientNavbar />
+      <FreeNavbar />
 
-      <div className=""> {/* Add margin-top to avoid overlap with navbar */}
+      <div className="mt-16"> {/* Add margin-top to avoid overlap with navbar */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/freelance/findtask" element={<FindTask />} />

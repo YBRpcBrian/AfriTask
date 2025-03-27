@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Wallet2, Hourglass, Banknote, Search, Filter, CheckCircle, Clock } from "lucide-react";
+import Deposit from "./Deposit";
+import Withdraw from "./Withdraw";
 
 const transactions = [
   { id: 1, date: "2025-03-20", type: "Deposit", amount: "100,000 FCFA", status: "Completed" },
@@ -11,6 +13,8 @@ const transactions = [
 const Wallet = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
+  const [showDeposit, setShowDeposit] = useState(false);
+  const [showWithdraw, setShowWithdraw] = useState(false);
 
   const filteredTransactions = transactions.filter(
     (txn) =>
@@ -41,99 +45,66 @@ const Wallet = () => {
         </div>
 
         {/* Wallet Branding */}
-        <div className="flex justify-center items-center mt-10 text-3xl sm:text-4xl font-semibold">
+        <div className="flex justify-center items-center mt-16 text-3xl sm:text-4xl font-semibold">
           <h1>Afri</h1>
           <h1 className="text-primary-2">Task</h1>
           <h1>Wallet</h1>
         </div>
       </div>
 
-      <div className="flex flex-row justify-center text-white mt-8 gap-16">
-            <button className="py-4 px-16 bg-primary rounded-lg">
-                Deposit
-            </button>
-            <button className="py-4 px-16 bg-orange-500 rounded-lg">
-                Withdraw
-            </button>
-
-
-        </div>
+      {/* Deposit & Withdraw Buttons */}
+      <div className="flex flex-row justify-center text-white mt-8 gap-8 sm:gap-16">
+        <button
+          className="py-4 px-8 sm:px-16 bg-primary hover:bg-primary-2 rounded-lg"
+          onClick={() => setShowDeposit(true)}
+        >
+          Deposit
+        </button>
+        <button
+          className="py-4 px-8 sm:px-16 bg-orange-500 hover:bg-orange-400 rounded-lg"
+          onClick={() => setShowWithdraw(true)}
+        >
+          Withdraw
+        </button>
+      </div>
 
       {/* Transaction History Section */}
-      <div className="mt-10 p-6 sm:mx-52">
+      <div className="mt-10 p-6 sm:mx-52 xl:mx-80">
         <h2 className="text-xl font-semibold mb-4">Transaction History</h2>
 
-        {/* Search & Filter */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-4">
-          <div className="relative w-full sm:w-1/2">
-            <Search className="absolute left-4 top-4 text-gray-400" size={20} />
-            <input
-              type="text"
-              placeholder="Search transactions..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border rounded-full shadow focus:outline-none focus:ring-2 focus:ring-primary-2"
-            />
-          </div>
-
-          <div className="relative w-full sm:w-1/3 ">
-            <Filter className="absolute left-4 top-4 text-gray-400" size={20} />
-            <select
-              className="w-full pl-12 pr-4 py-3 border rounded-full shadow focus:outline-none focus:ring-2 focus:ring-primary-2"
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-            >
-              <option value="All">All Transactions</option>
-              <option value="Deposit">Deposits</option>
-              <option value="Withdrawal">Withdrawals</option>
-            </select>
-          </div>
-        </div>
-
-        
-
         {/* Transactions Table */}
-        <div className="overflow-x-auto text-sm ">
+        <div className="overflow-x-auto text-sm">
           <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow">
             <thead className="bg-primary text-white text-left">
               <tr className="border-b">
                 <th className="px-6 py-4">Date</th>
-                <th className="px-6 py-4">Type</th>
-                <th className="px-6 py-4">Amount</th>
-                <th className="px-6 py-4">Status</th>
+                <th className="px-6 py-4 text-center">Type</th>
+                <th className="px-6 py-4 text-center">Amount</th>
+                <th className="px-6 py-4 text-right">Status</th>
               </tr>
             </thead>
             <tbody>
               {filteredTransactions.map((txn) => (
-                <tr
-                  key={txn.id}
-                  className="border-b last:border-none hover:bg-gray-100 transition duration-200"
-                >
+                <tr key={txn.id} className="border-b hover:bg-gray-100 transition">
                   <td className="px-6 py-4">{txn.date}</td>
-                  <td className="px-6 py-4">{txn.type}</td>
-                  <td className="px-6 py-4">{txn.amount}</td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`flex items-center w-fit gap-2 px-4 py-2 rounded-full text-white font-semibold ${
-                        txn.status === "Completed"
-                          ? "bg-green-500"
-                          : "bg-orange-500"
-                      }`}
-                    >
+                  <td className="px-6 py-4 text-center">{txn.type}</td>
+                  <td className="px-6 py-4 text-center">{txn.amount}</td>
+                  <td className="px-6 py-4 flex justify-end space-x-1">
+                    <span className={`flex items-center px-4 py-2 rounded-full text-white font-semibold  ${txn.status === "Completed" ? "bg-green-500" : "bg-orange-500"}`}>
                       {txn.status === "Completed" ? <CheckCircle size={16} /> : <Clock size={16} />}
-                      {txn.status}
+                        {txn.status}
                     </span>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-
-          {filteredTransactions.length === 0 && (
-            <p className="text-center text-gray-500 mt-4">No transactions found.</p>
-          )}
         </div>
       </div>
+
+      {/* Modals */}
+      <Deposit isOpen={showDeposit} onClose={() => setShowDeposit(false)} />
+      <Withdraw isOpen={showWithdraw} onClose={() => setShowWithdraw(false)} />
     </div>
   );
 };
