@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SignUp from "./pages/SighnUp";
+import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import FreeNavbar from "./Dashboard/Freelancer/FreeNavbar";
 import FindTask from "./Dashboard/Freelancer/pages/FindTask";
@@ -8,6 +8,7 @@ import Wallet from "./Dashboard/Freelancer/pages/Wallet"
 import ClientNavbar from "./Dashboard/JobOwner/clientNavbar"
 import PostTask from "./Dashboard/JobOwner/pages/PostTask";
 import MakePayments from "./Dashboard/JobOwner/pages/MakePayments";
+import Login from "./pages/Login";
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
       <div className="mt-16"> {/* Add margin-top to avoid overlap with navbar */}
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/freelance/findtask" element={<FindTask />} />
           <Route path="/freelance/delivertask" element={<DeliverTask />} />
           <Route path="/freelance/wallet" element={<Wallet />} />
