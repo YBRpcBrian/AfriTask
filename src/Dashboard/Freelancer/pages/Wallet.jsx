@@ -48,6 +48,17 @@ const Wallet = () => {
         </div>
       </div>
 
+      <div className="flex flex-row justify-center text-white mt-8 gap-16">
+            <button className="py-4 px-16 bg-primary rounded-lg">
+                Deposit
+            </button>
+            <button className="py-4 px-16 bg-orange-500 rounded-lg">
+                Withdraw
+            </button>
+
+
+        </div>
+
       {/* Transaction History Section */}
       <div className="mt-10 p-6 sm:mx-52">
         <h2 className="text-xl font-semibold mb-4">Transaction History</h2>
@@ -78,6 +89,8 @@ const Wallet = () => {
             </select>
           </div>
         </div>
+
+        
 
         {/* Transactions Table */}
         <div className="overflow-x-auto text-sm ">

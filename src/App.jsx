@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       {/* Navbar stays visible across all pages */}
-      <FreeNavbar />
+      <ClientNavbar />
 
       <div className=""> {/* Add margin-top to avoid overlap with navbar */}
         <Routes>
