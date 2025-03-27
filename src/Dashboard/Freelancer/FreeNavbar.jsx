@@ -2,10 +2,21 @@ import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../components/Logo";
 import { Settings, Menu, X, UserCircle, Search, CreditCard, Home } from "lucide-react"; // Modern icons
-import profile from "../../assets/profile.jpg";
+import { useSelector } from "react-redux"; // Import useSelector
+import profile from "../../assets/profile.jpg"; // Default profile image
 
 const FreeNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Accessing the authenticated user from Redux state
+  const { user } = useSelector((state) => state.auth); // Access the user from the Redux state
+
+  // If no user is authenticated, we can show a default profile image and name
+  const userName = user ? user.fullName : "Guest";
+  const userType = user ? user.userType : "Freelancer"; // Default type as "Freelancer"
+  const userProfilePic = user && user.profileImage ? `http://localhost:5000${user.profileImage}` : profile;
+  console.log(userProfilePic);
+ 
 
   return (
     <nav className="bg-white shadow-md px-6 sm:px-8 py-4 flex justify-between items-center fixed top-0 left-0 w-full z-50">
@@ -51,11 +62,11 @@ const FreeNavbar = () => {
       {/* Profile & Settings (Desktop) */}
       <div className="hidden md:flex items-center space-x-3">
         <div className="text-right">
-          <h1 className="text-sm font-semibold text-gray-800">Yabuin Brian</h1>
-          <span className="text-xs text-primary">Freelancer</span>
+          <h1 className="text-sm font-semibold text-gray-800">{userName}</h1>
+          <span className="text-xs text-primary">{userType}</span>
         </div>
         <div className="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
-          <img src={profile} className="h-full w-full object-cover" alt="Profile" />
+          <img src={userProfilePic} className="h-full w-full object-cover" alt="Profile" />
         </div>
       </div>
 
@@ -119,11 +130,11 @@ const FreeNavbar = () => {
         {/* User Info */}
         <div className="flex items-center space-x-3 bg-gray-100 px-4 py-3 rounded-md w-4/5">
           <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
-            <img src={profile} className="w-full h-full object-cover" alt="Profile" />
+            <img src={userProfilePic} className="w-full h-full object-cover" alt="Profile" />
           </div>
           <div>
-            <h1 className="text-gray-800 font-semibold">Yabuin Brian</h1>
-            <span className="text-gray-500 text-sm">Freelancer</span>
+            <h1 className="text-gray-800 font-semibold">{userName}</h1>
+            <span className="text-gray-500 text-sm">{userType}</span>
           </div>
         </div>
       </div>

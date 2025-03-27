@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createUser } from "../redux/actions/authActions"; // Import the registration action
 import { Mail, Lock, User, Phone, Image } from "lucide-react";
 import { BsGoogle } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import img from "../assets/woman.jpg";
 import Logo from "../components/Logo";
 
 const SignUp = () => {
   const dispatch = useDispatch();
-
+  
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -19,9 +16,6 @@ const SignUp = () => {
     confirmPassword: "",
     userType: "freelancer", // Default to Freelancer
   });
-
-  const navigate = useNavigate();
-
 
   const [profileImage, setProfileImage] = useState(null);
   const [profilePreview, setProfilePreview] = useState(null);
@@ -58,21 +52,14 @@ const SignUp = () => {
       data.append("profileImage", profileImage);
     }
 
-    dispatch(createUser(data)).then((response) => {
-      if (response.success) {
-        navigate("/login"); // Redirect to login page
-      } else {
-        alert(response.message); // Show specific error message
-      }
-    });
-    
-    
+    // Dispatch action to create user
+    dispatch(createUser(data));
   };
 
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-gray-100 text-sm">
       {/* Left Side - Image */}
-      <div className="hidden lg:flex w-1/2 relative overflow-hidden">
+      <div className="hidden lg:flex w-1/2  relative overflow-hidden">
         <img
           src={img}
           alt="SignUp"
@@ -93,25 +80,21 @@ const SignUp = () => {
           <div className="flex justify-between mt-6 bg-gray-100 p-1 rounded-lg">
             <button
               className={`w-1/2 py-2 text-sm font-medium rounded-md transition ${
-                formData.userType === "freelancer"
+                userType === "freelancer"
                   ? "bg-primary text-white"
                   : "text-gray-700"
               }`}
-              onClick={() =>
-                setFormData({ ...formData, userType: "freelancer" })
-              }
+              onClick={() => setUserType("freelancer")}
             >
               Freelancer
             </button>
             <button
               className={`w-1/2 py-2 text-sm font-medium rounded-md transition ${
-                formData.userType === "job-owner"
+                userType === "job-owner"
                   ? "bg-primary text-white"
                   : "text-gray-700"
               }`}
-              onClick={() =>
-                setFormData({ ...formData, userType: "job-owner" })
-              }
+              onClick={() => setUserType("job-owner")}
             >
               Job Owner
             </button>
@@ -120,9 +103,9 @@ const SignUp = () => {
           {/* Profile Photo Upload */}
           <div className="mt-6 flex flex-col items-center">
             <label className="w-24 h-24 rounded-full border-2 border-gray-300 flex items-center justify-center cursor-pointer overflow-hidden">
-              {profilePreview ? (
+              {profileImage ? (
                 <img
-                  src={profilePreview}
+                  src={profileImage}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
@@ -139,91 +122,72 @@ const SignUp = () => {
             <p className="text-sm text-gray-500 mt-2">Upload Profile Picture</p>
           </div>
 
-          <form onSubmit={handleSubmit}>
-            {/* Full Name */}
-            <div className="mt-6">
+          {/* Full Name */}
+          <div className="mt-6">
+            <label className="text-gray-700 flex items-center gap-2">
+              <User size={20} className="text-primary" /> Full Name
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your full name"
+              className="w-full mt-2 p-3 border rounded-lg focus:ring-2 focus:ring-primary-2 focus:outline-none"
+            />
+          </div>
+
+          {/* Email */}
+          <div className="mt-4">
+            <label className="text-gray-700 flex items-center gap-2">
+              <Mail size={20} className="text-primary" /> Email
+            </label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full mt-2 p-3 border rounded-lg focus:ring-2 focus:ring-primary-2 focus:outline-none"
+            />
+          </div>
+
+          {/* Phone Number */}
+          <div className="mt-4">
+            <label className="text-gray-700 flex items-center gap-2">
+              <Phone size={20} className="text-primary" /> Phone Number
+            </label>
+            <input
+              type="tel"
+              placeholder="Enter your phone number"
+              className="w-full mt-2 p-3 border rounded-lg focus:ring-2 focus:ring-primary-2 focus:outline-none"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-2">
+            {/* Password */}
+            <div className="mt-4 col-span-1">
               <label className="text-gray-700 flex items-center gap-2">
-                <User size={20} className="text-primary" /> Full Name
+                <Lock size={20} className="text-primary" /> Password
               </label>
               <input
-                type="text"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-                placeholder="Enter your full name"
+                type="password"
+                placeholder="Enter your password"
                 className="w-full mt-2 p-3 border rounded-lg focus:ring-2 focus:ring-primary-2 focus:outline-none"
               />
             </div>
 
-            {/* Email */}
-            <div className="mt-4">
+            {/* Confirm Password */}
+            <div className="mt-4 col-span-1">
               <label className="text-gray-700 flex items-center gap-2">
-                <Mail size={20} className="text-primary" /> Email
+                <Lock size={20} className="text-primary" /> Confirm Password
               </label>
               <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Enter your email"
+                type="password"
+                placeholder="Re-enter your password"
                 className="w-full mt-2 p-3 border rounded-lg focus:ring-2 focus:ring-primary-2 focus:outline-none"
               />
             </div>
+          </div>
 
-            {/* Phone Number */}
-            <div className="mt-4">
-              <label className="text-gray-700 flex items-center gap-2">
-                <Phone size={20} className="text-primary" /> Phone Number
-              </label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="Enter your phone number"
-                className="w-full mt-2 p-3 border rounded-lg focus:ring-2 focus:ring-primary-2 focus:outline-none"
-              />
-            </div>
-
-            {/* Password and Confirm Password */}
-            <div className="grid grid-cols-2 gap-2">
-              <div className="mt-4 col-span-1">
-                <label className="text-gray-700 flex items-center gap-2">
-                  <Lock size={20} className="text-primary" /> Password
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Enter your password"
-                  className="w-full mt-2 p-3 border rounded-lg focus:ring-2 focus:ring-primary-2 focus:outline-none"
-                />
-              </div>
-
-              <div className="mt-4 col-span-1">
-                <label className="text-gray-700 flex items-center gap-2">
-                  <Lock size={20} className="text-primary" /> Confirm Password
-                </label>
-                <input
-                  type="password"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="Re-enter your password"
-                  className="w-full mt-2 p-3 border rounded-lg focus:ring-2 focus:ring-primary-2 focus:outline-none"
-                />
-              </div>
-            </div>
-
-            {/* Signup Button */}
-            <button
-              type="submit"
-              className="w-full mt-6 bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-3 transition"
-            >
-              Sign Up
-            </button>
-          </form>
+          {/* Signup Button */}
+          <button className="w-full mt-6 bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-3 transition">
+            Sign Up
+          </button>
 
           {/* Alternative Signup */}
           <div className="flex items-center my-6">

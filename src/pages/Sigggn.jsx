@@ -4,7 +4,6 @@ import { createUser } from "../redux/actions/authActions"; // Import the registr
 import { Mail, Lock, User, Phone, Image } from "lucide-react";
 import { BsGoogle } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import img from "../assets/woman.jpg";
 import Logo from "../components/Logo";
 
@@ -19,9 +18,6 @@ const SignUp = () => {
     confirmPassword: "",
     userType: "freelancer", // Default to Freelancer
   });
-
-  const navigate = useNavigate();
-
 
   const [profileImage, setProfileImage] = useState(null);
   const [profilePreview, setProfilePreview] = useState(null);
@@ -58,15 +54,8 @@ const SignUp = () => {
       data.append("profileImage", profileImage);
     }
 
-    dispatch(createUser(data)).then((response) => {
-      if (response.success) {
-        navigate("/login"); // Redirect to login page
-      } else {
-        alert(response.message); // Show specific error message
-      }
-    });
-    
-    
+    // Dispatch action to create user
+    dispatch(createUser(data));
   };
 
   return (
@@ -97,9 +86,7 @@ const SignUp = () => {
                   ? "bg-primary text-white"
                   : "text-gray-700"
               }`}
-              onClick={() =>
-                setFormData({ ...formData, userType: "freelancer" })
-              }
+              onClick={() => setFormData({ ...formData, userType: "freelancer" })}
             >
               Freelancer
             </button>
@@ -109,9 +96,7 @@ const SignUp = () => {
                   ? "bg-primary text-white"
                   : "text-gray-700"
               }`}
-              onClick={() =>
-                setFormData({ ...formData, userType: "job-owner" })
-              }
+              onClick={() => setFormData({ ...formData, userType: "job-owner" })}
             >
               Job Owner
             </button>
@@ -224,29 +209,6 @@ const SignUp = () => {
               Sign Up
             </button>
           </form>
-
-          {/* Alternative Signup */}
-          <div className="flex items-center my-6">
-            <div className="flex-1 border-t border-gray-300"></div>
-            <p className="px-3 text-gray-500 text-sm">Or sign up with</p>
-            <div className="flex-1 border-t border-gray-300"></div>
-          </div>
-          <div className="flex gap-4">
-            <button className="w-1/2 flex items-center justify-center gap-2 py-3 border rounded-lg hover:bg-gray-100 transition">
-              <BsGoogle size={20} className="text-red-500" /> Google
-            </button>
-            <button className="w-1/2 flex items-center justify-center gap-2 py-3 border rounded-lg hover:bg-gray-100 transition">
-              <FaFacebook size={20} className="text-blue-600" /> Facebook
-            </button>
-          </div>
-
-          {/* Login Link */}
-          <p className="text-center mt-6 text-gray-600">
-            Already have an account?{" "}
-            <a href="#" className="text-primary hover:underline">
-              Login
-            </a>
-          </p>
         </div>
       </div>
     </div>
