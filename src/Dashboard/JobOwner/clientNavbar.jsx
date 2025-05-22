@@ -13,7 +13,7 @@ const ClientNavbar = () => {
   // Fallbacks in case user data is not available
   const userName = user ? user.fullName : "Guest";
   const userType = user ? user.userType : "Freelancer"; // Default type as "Freelancer"
-  const userProfilePic = user && user.profileImage ? `http://localhost:5000/${user.profileImage}` : "/assets/profile.jpg"; // Fallback to default image
+  const userProfilePic = user && user.profileImage ? `https://afritask-backend.onrender.com${user.profileImage}` : "/assets/profile.jpg"; // Fallback to default image
 
   return (
     <nav className="bg-white shadow-md px-6 sm:px-8 py-4 flex justify-between items-center fixed top-0 left-0 w-full z-50">

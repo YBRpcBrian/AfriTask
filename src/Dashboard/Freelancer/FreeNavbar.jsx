@@ -14,7 +14,7 @@ const FreeNavbar = () => {
   // If no user is authenticated, we can show a default profile image and name
   const userName = user ? user.fullName : "Guest";
   const userType = user ? user.userType : "Freelancer"; // Default type as "Freelancer"
-  const userProfilePic = user && user.profileImage ? `http://localhost:5000${user.profileImage}` : profile;
+  const userProfilePic = user && user.profileImage ? `https://afritask-backend.onrender.com${user.profileImage}` : profile;
   console.log(userProfilePic);
  
 
