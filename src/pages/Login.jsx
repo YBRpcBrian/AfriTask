@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Mail, Lock } from "lucide-react";
 import { BsGoogle } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
@@ -131,9 +131,9 @@ const Login = () => {
           {/* Signup Link */}
           <p className="text-center mt-6 text-gray-600">
             Don't have an account?{" "}
-            <a href="/signup" className="text-primary hover:underline">
+            <Link to="/signup" className="text-primary hover:underline">
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
       </div>
