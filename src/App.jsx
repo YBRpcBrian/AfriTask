@@ -14,8 +14,6 @@ import PaymentSuccesPage from "./pages/PaymentSuccesPage";
 
 function App() {
   const user = useSelector((state) => state.auth?.user); // Get authenticated user
-
-  // Determine user type for navbar
   const isJobOwner = user?.userType === "job-owner";
   const isFreelancer = user?.userType === "freelancer";
 
@@ -30,27 +28,43 @@ function App() {
       )}
 
       <Routes>
-        {/* Public Routes (No margin-top applied) */}
-        <Route path="/success" element={<PaymentSuccesPage />} />
+        {/* Public Routes (no extra margin) */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/success" element={<PaymentSuccesPage />} />
+
+        {/* Protected Routes (with top margin only if user is logged in) */}
+        {user && (
+          <>
+            {/* Freelancer Routes */}
+            {isFreelancer && (
+              <>
+                <Route path="/freelance/findtask" element={<div className="mt-16"><FindTask /></div>} />
+                <Route path="/freelance/delivertask" element={<div className="mt-16"><DeliverTask /></div>} />
+                <Route path="/freelance/wallet" element={<div className="mt-16"><Wallet /></div>} />
+              </>
+            )}
+
+            {/* Job Owner Routes */}
+            {isJobOwner && (
+              <>
+                <Route path="/jobowner/posttask" element={<div className="mt-16"><PostTask /></div>} />
+                <Route path="/jobowner/makepayments" element={<div className="mt-16"><MakePayments /></div>} />
+                <Route path="/jobowner/wallet" element={<div className="mt-16"><Wallet /></div>} />
+              </>
+            )}
+          </>
+        )}
+
+        {/* Redirect any protected route if not logged in */}
+        {!user && (
+          <>
+            <Route path="/freelance/*" element={<Navigate to="/" />} />
+            <Route path="/jobowner/*" element={<Navigate to="/" />} />
+          </>
+        )}
       </Routes>
-
-      {/* Protected Routes (Wrapped in div with mt-16) */}
-      <div className="mt-16">
-        <Routes>
-          {/* Protected Routes for Freelancers */}
-          <Route path="/freelance/findtask" element={user && isFreelancer ? <FindTask /> : <Navigate to="/" />} />
-          <Route path="/freelance/delivertask" element={user && isFreelancer ? <DeliverTask /> : <Navigate to="/" />} />
-          <Route path="/freelance/wallet" element={user && isFreelancer ? <Wallet /> : <Navigate to="/" />} />
-
-          {/* Protected Routes for Job Owners */}
-          <Route path="/jobowner/posttask" element={user && isJobOwner ? <PostTask /> : <Navigate to="/" />} />
-          <Route path="/jobowner/makepayments" element={user && isJobOwner ? <MakePayments /> : <Navigate to="/" />} />
-          <Route path="/jobowner/wallet" element={user && isJobOwner ? <Wallet /> : <Navigate to="/" />} />
-        </Routes>
-      </div>
     </Router>
   );
 }
