@@ -60,7 +60,7 @@ const SignUp = () => {
 
     dispatch(createUser(data)).then((response) => {
       if (response.success) {
-        navigate("/login"); // Redirect to login page
+        navigate("/"); // Redirect to login page
       } else {
         alert(response.message); // Show specific error message
       }

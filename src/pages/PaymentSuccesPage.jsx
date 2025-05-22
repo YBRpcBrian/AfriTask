@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 const PaymentSuccessPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-md">
+      <div className="max-w-md p-8 text-center bg-white rounded-lg shadow-lg">
         {/* Checkmark Icon */}
-        <div className="flex items-center justify-center w-20 h-20 mx-auto bg-green-500 text-white rounded-full">
+        <div className="flex items-center justify-center w-20 h-20 mx-auto text-white bg-green-500 rounded-full">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-12 h-12"
@@ -21,12 +21,12 @@ const PaymentSuccessPage = () => {
           </svg>
         </div>
 
-        <h1 className="text-2xl font-bold text-gray-800 mt-4">Payment Successful!</h1>
-        <p className="text-gray-600 mt-2">Your transaction has been completed successfully.</p>
+        <h1 className="mt-4 text-2xl font-bold text-gray-800">Payment Successful!</h1>
+        <p className="mt-2 text-gray-600">Your transaction has been completed successfully.</p>
 
         {/* Go Back Button */}
         <Link to="/" className="inline-block mt-6">
-          <button className="bg-primary hover:bg-primary-3 text-white font-medium py-2 px-6 rounded-lg shadow-lg transition-all">
+          <button className="px-6 py-2 font-medium text-white transition-all rounded-lg shadow-lg bg-primary hover:bg-primary-3">
             Go Back to Home
           </button>
         </Link>
