@@ -4,7 +4,7 @@ import { createUser } from "../redux/actions/authActions"; // Import the registr
 import { Mail, Lock, User, Phone, Image } from "lucide-react";
 import { BsGoogle } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/woman.jpg";
 import Logo from "../components/Logo";
 
@@ -243,9 +243,9 @@ const SignUp = () => {
           {/* Login Link */}
           <p className="text-center mt-6 text-gray-600">
             Already have an account?{" "}
-            <a href="#" className="text-primary hover:underline">
+            <Link to="/" className="text-primary hover:underline">
               Login
-            </a>
+            </Link>
           </p>
         </div>
       </div>
