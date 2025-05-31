@@ -1,144 +1,149 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import Logo from "../../components/Logo";
-import { Settings, Menu, X, UserCircle, Search, CreditCard, Home } from "lucide-react"; // Modern icons
-import { useSelector } from "react-redux"; // Import useSelector
-import profile from "../../assets/profile.jpg"; // Default profile image
+import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import logo from "../../assets/logo.png";
+import profileFallback from "../../assets/profile.jpg";
+import { Menu, X, Search, Home, CreditCard } from "lucide-react";
+
+const menuLinks = [
+  {
+    name: "Find Task",
+    path: "/freelance/findtask",
+    icon: <Search size={22} className="text-gray-700" />,
+  },
+  {
+    name: "Deliver Task",
+    path: "/freelance/delivertask",
+    icon: <Home size={22} className="text-gray-700" />,
+  },
+  {
+    name: "Wallet",
+    path: "/freelance/wallet",
+    icon: <CreditCard size={22} className="text-gray-700" />,
+  },
+];
 
 const FreeNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  // Accessing the authenticated user from Redux state
-  const { user } = useSelector((state) => state.auth); // Access the user from the Redux state
+  const { user } = useSelector((state) => state.auth);
+  const userName = user?.fullName || "Guest";
+  const userType = user?.userType || "Freelancer";
+  const userProfilePic = user?.profileImage
+    ? `https://afritask-backend.onrender.com${user.profileImage}`
+    : profileFallback;
 
-  // If no user is authenticated, we can show a default profile image and name
-  const userName = user ? user.fullName : "Guest";
-  const userType = user ? user.userType : "Freelancer"; // Default type as "Freelancer"
-  const userProfilePic = user && user.profileImage ? `https://afritask-backend.onrender.com${user.profileImage}` : profile;
-  console.log(userProfilePic);
- 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="bg-white shadow-md px-6 sm:px-8 py-4 flex justify-between items-center fixed top-0 left-0 w-full z-50">
-      {/* Logo */}
-      <div className="flex items-center">
-        <Logo />
-      </div>
+    <>
+      {/* Navbar */}
+      <nav
+        className={`fixed top-4 left-1/2 transform -translate-x-1/2 w-[95%] max-w-screen-xl z-50 rounded-2xl px-6 sm:px-10 py-2 flex justify-between items-center transition-all duration-300 ${
+          scrolled
+            ? "bg-white/10 backdrop-blur-md shadow-md"
+            : "bg-white shadow-md"
+        }`}
+      >
+        {/* Logo */}
+        <img src={logo} className="w-36 h-auto" alt="Logo" />
 
-      {/* Menu Links (Desktop) */}
-      <ul className="hidden md:flex space-x-6 text-gray-700 font-semibold text-lg">
-        <li>
-          <NavLink
-            to="/freelance/findtask"
-            className={({ isActive }) =>
-              isActive ? "text-primary font-bold" : "hover:text-primary transition duration-300"
-            }
-          >
-            Find Task
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/freelance/delivertask"
-            className={({ isActive }) =>
-              isActive ? "text-primary font-bold" : "hover:text-primary transition duration-300"
-            }
-          >
-            Deliver Task
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/freelance/wallet"
-            className={({ isActive }) =>
-              isActive ? "text-primary font-bold" : "hover:text-primary transition duration-300"
-            }
-          >
-            Wallet
-          </NavLink>
-        </li>
-      </ul>
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex space-x-8 text-gray-700 text-xs">
+          {menuLinks.map((link) => (
+            <li key={link.name}>
+              <NavLink
+                to={link.path}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-primary font-semibold"
+                    : "hover:text-primary transition"
+                }
+              >
+                {link.name}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
 
-      {/* Profile & Settings (Desktop) */}
-      <div className="hidden md:flex items-center space-x-3">
-        <div className="text-right">
-          <h1 className="text-sm font-semibold text-gray-800">{userName}</h1>
-          <span className="text-xs text-primary">{userType}</span>
+        {/* User Profile - Desktop */}
+        <div className="hidden md:flex items-center space-x-3">
+          <div className="text-right">
+            <p className="text-sm font-semibold text-gray-800">{userName}</p>
+            <span className="text-xs text-primary">{userType}</span>
+          </div>
+          <div className="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+            <img
+              src={userProfilePic}
+              alt="Profile"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
-        <div className="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
-          <img src={userProfilePic} className="h-full w-full object-cover" alt="Profile" />
-        </div>
-      </div>
 
-      {/* Mobile Menu Button */}
-      <button className="md:hidden text-gray-700" onClick={() => setIsOpen(!isOpen)}>
-        {isOpen ? <X size={28} /> : <Menu size={28} />}
-      </button>
+        {/* Hamburger Icon - Mobile */}
+        <button
+          onClick={() => setIsOpen(true)}
+          className="md:hidden text-gray-700"
+        >
+          <Menu size={28} />
+        </button>
+      </nav>
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 left-0 w-full h-full bg-white shadow-xl transform ${
-          isOpen ? "translate-x-0 opacity-100" : "-translate-x-full opacity-0"
-        } transition-all duration-300 md:hidden z-50 flex flex-col items-center pt-20 space-y-6`}
+        className={`fixed top-0 left-0 h-full w-full bg-white z-40 transform transition-transform duration-300 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
-        <button className="absolute top-4 right-6 text-gray-700" onClick={() => setIsOpen(false)}>
-          <X size={32} />
-        </button>
+        <div className="pt-6 px-6 flex justify-between items-center">
+          <img src={logo} alt="Logo" className="w-32" />
+          <button onClick={() => setIsOpen(false)} className="text-gray-700">
+            <X size={32} />
+          </button>
+        </div>
 
-        <Logo />
+        <div className="mt-8 flex flex-col items-center space-y-4 px-6">
+          {menuLinks.map((link) => (
+            <NavLink
+              key={link.name}
+              to={link.path}
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-3 py-3 px-4 w-full rounded-lg text-lg font-medium ${
+                  isActive
+                    ? "bg-gray-100 text-primary font-bold"
+                    : "hover:bg-gray-50 text-gray-700"
+                }`
+              }
+            >
+              {link.icon}
+              <span>{link.name}</span>
+            </NavLink>
+          ))}
 
-        {/* Menu Links with Icons */}
-        <NavLink
-          to="/freelance/findtask"
-          className={({ isActive }) =>
-            isActive
-              ? "flex items-center text-lg font-medium hover:text-primary space-x-2 bg-gray-100 py-4 px-30 rounded-md text-primary font-bold"
-              : "flex items-center text-lg font-medium hover:text-primary space-x-2 bg-gray-100 py-4 px-30 rounded-md"
-          }
-          onClick={() => setIsOpen(false)}
-        >
-          <Search size={24} className="text-gray-700" />
-          <span>Find Task</span>
-        </NavLink>
-
-        <NavLink
-          to="/freelance/delivertask"
-          className={({ isActive }) =>
-            isActive
-              ? "flex items-center text-lg font-medium hover:text-primary space-x-2 bg-gray-100 py-4 px-26 rounded-md text-primary font-bold"
-              : "flex items-center text-lg font-medium hover:text-primary space-x-2 bg-gray-100 py-4 px-26 rounded-md"
-          }
-          onClick={() => setIsOpen(false)}
-        >
-          <Home size={24} className="text-gray-700" />
-          <span>Deliver Task</span>
-        </NavLink>
-
-        <NavLink
-          to="/freelance/wallet"
-          className={({ isActive }) =>
-            isActive
-              ? "flex items-center text-lg  hover:text-primary space-x-2 bg-gray-100 py-4 px-34 rounded-md text-primary font-bold "
-              : "flex items-center text-lg font-medium hover:text-primary space-x-2 bg-gray-100 py-4 px-34 rounded-md"
-          }
-          onClick={() => setIsOpen(false)}
-        >
-          <CreditCard size={24} className="text-gray-700" />
-          <span>Wallet</span>
-        </NavLink>
-
-        {/* User Info */}
-        <div className="flex items-center space-x-3 bg-gray-100 px-4 py-3 rounded-md w-4/5">
-          <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
-            <img src={userProfilePic} className="w-full h-full object-cover" alt="Profile" />
-          </div>
-          <div>
-            <h1 className="text-gray-800 font-semibold">{userName}</h1>
-            <span className="text-gray-500 text-sm">{userType}</span>
+          {/* User Info */}
+          <div className="flex items-center space-x-4 bg-gray-100 px-4 py-3 rounded-md w-full mt-6">
+            <div className="w-12 h-12 rounded-full border-2 border-primary overflow-hidden">
+              <img
+                src={userProfilePic}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div>
+              <p className="font-semibold text-gray-800">{userName}</p>
+              <span className="text-sm text-primary">{userType}</span>
+            </div>
           </div>
         </div>
       </div>
-    </nav>
+    </>
   );
 };
 

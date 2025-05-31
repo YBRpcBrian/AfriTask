@@ -5,7 +5,7 @@ import { Mail, Lock } from "lucide-react";
 import { BsGoogle } from "react-icons/bs";
 import { FaFacebook } from "react-icons/fa";
 import img from "../assets/login.jpg";
-import Logo from "../components/Logo";
+import logo from "../assets/logo.png";
 import { loginUser } from "../redux/actions/authActions"; // Import login action
 
 const Login = () => {
@@ -56,9 +56,9 @@ const Login = () => {
 
       {/* Right Side - Login Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-6 bg-primary">
-        <div className="w-full max-w-md bg-white p-8 rounded-xl shadow-lg">
+        <div className="w-full max-w-md scale-90 lg:scale-[70%] bg-white p-8 rounded-xl shadow-lg">
           <div className="flex justify-center">
-            <Logo />
+            <img src={logo} className="h-auto w-44" alt="" />
           </div>
 
           <p className="text-gray-500 text-center mt-2">Login to your account</p>
