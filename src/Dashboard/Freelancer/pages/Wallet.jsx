@@ -1,8 +1,14 @@
 import React, { useState } from "react";
-import { Wallet2, Hourglass, Banknote, Search, Filter, CheckCircle, Clock } from "lucide-react";
-import Deposit from "./Deposit";
+import { useNavigate } from "react-router-dom";
+import {
+  Wallet2,
+  Hourglass,
+  Banknote,
+  CheckCircle,
+  Clock,
+} from "lucide-react";
 import Withdraw from "./Withdraw";
-import logo from "../../../assets/logowhite.png"
+import logo from "../../../assets/logowhite.png";
 
 const transactions = [
   { id: 1, date: "2025-03-20", type: "Deposit", amount: "100,000 FCFA", status: "Completed" },
@@ -14,8 +20,8 @@ const transactions = [
 const Wallet = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
-  const [showDeposit, setShowDeposit] = useState(false);
   const [showWithdraw, setShowWithdraw] = useState(false);
+  const navigate = useNavigate(); // 👈 added
 
   const filteredTransactions = transactions.filter(
     (txn) =>
@@ -24,7 +30,7 @@ const Wallet = () => {
   );
 
   return (
-    <div className=" pb-12">
+    <div className="pb-12">
       {/* Wallet Balance Section */}
       <div className="rounded-b-4xl text-white bg-primary-3 p-8 pt-36">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
@@ -47,7 +53,7 @@ const Wallet = () => {
 
         {/* Wallet Branding */}
         <div className="flex justify-center items-center mt-16 text-3xl sm:text-4xl font-semibold">
-          <img src={logo} className="h-auto w-44" alt="" />
+          <img src={logo} className="h-auto w-44" alt="Logo" />
         </div>
       </div>
 
@@ -55,7 +61,7 @@ const Wallet = () => {
       <div className="flex flex-row justify-center text-white mt-8 gap-8 sm:gap-16">
         <button
           className="py-4 px-8 sm:px-16 bg-primary hover:bg-primary-2 rounded-lg"
-          onClick={() => setShowDeposit(true)}
+          onClick={() => navigate("/deposit")} // 👈 updated
         >
           Deposit
         </button>
@@ -71,7 +77,6 @@ const Wallet = () => {
       <div className="mt-10 p-6 sm:mx-52 xl:mx-80">
         <h2 className="text-xl font-semibold mb-4">Transaction History</h2>
 
-        {/* Transactions Table */}
         <div className="overflow-x-auto text-sm">
           <table className="w-full border-collapse bg-white rounded-lg overflow-hidden shadow">
             <thead className="bg-primary text-white text-left">
@@ -89,9 +94,9 @@ const Wallet = () => {
                   <td className="px-6 py-4 text-center">{txn.type}</td>
                   <td className="px-6 py-4 text-center">{txn.amount}</td>
                   <td className="px-6 py-4 flex justify-end space-x-1">
-                    <span className={`flex items-center px-4 py-2 rounded-full text-white font-semibold  ${txn.status === "Completed" ? "bg-green-500" : "bg-orange-500"}`}>
+                    <span className={`flex items-center px-4 py-2 rounded-full text-white font-semibold ${txn.status === "Completed" ? "bg-green-500" : "bg-orange-500"}`}>
                       {txn.status === "Completed" ? <CheckCircle size={16} /> : <Clock size={16} />}
-                        {txn.status}
+                      {txn.status}
                     </span>
                   </td>
                 </tr>
@@ -101,8 +106,7 @@ const Wallet = () => {
         </div>
       </div>
 
-      {/* Modals */}
-      <Deposit isOpen={showDeposit} onClose={() => setShowDeposit(false)} />
+      {/* Withdraw Modal */}
       <Withdraw isOpen={showWithdraw} onClose={() => setShowWithdraw(false)} />
     </div>
   );
