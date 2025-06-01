@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import hero from "../../assets/hero.jpg"; // Ensure this path is correct
 
 const rotatingTexts = [
@@ -11,16 +11,27 @@ const rotatingTexts = [
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const ref = useRef(null);
+
+  // Check if the component is in view
+  const isInView = useInView(ref, { once: false, margin: "-100px" });
 
   useEffect(() => {
+    if (!isInView) return; // Stop interval if not in view
+
     const interval = setInterval(() => {
       setCurrentIndex((i) => (i + 1) % rotatingTexts.length);
     }, 4000);
+
     return () => clearInterval(interval);
-  }, []);
+  }, [isInView]);
 
   return (
-    <section className="relative h-screen w-full overflow-hidden">
+    <section
+      ref={ref}
+      className="relative h-screen w-full overflow-hidden"
+      aria-label="Hero section"
+    >
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img
@@ -28,7 +39,6 @@ const Hero = () => {
           alt="Freelancing background"
           className="w-full h-full object-cover"
         />
-        {/* Corrected overlay */}
         <div className="absolute inset-0 bg-black/60"></div>
       </div>
 
@@ -36,7 +46,7 @@ const Hero = () => {
       <div className="relative z-10 flex flex-col justify-center items-center text-center h-full px-6 max-w-5xl mx-auto">
         <motion.h1
           initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
           className="text-white text-4xl sm:text-5xl font-extrabold leading-tight mb-8"
         >
@@ -44,18 +54,20 @@ const Hero = () => {
           <span className="text-primary">Connect Work Get Paid</span>
         </motion.h1>
 
-        <div className="h-10 relative mb-8 w-full text-sm">
+        <div className="h-10 relative mb-8 w-full text-sm min-h-[40px]">
           <AnimatePresence mode="wait">
-            <motion.p
-              key={currentIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.6 }}
-              className="absolute inset-0 text-gray-200 text-lg px-4"
-            >
-              {rotatingTexts[currentIndex]}
-            </motion.p>
+            {isInView && (
+              <motion.p
+                key={currentIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.6 }}
+                className="absolute inset-0 text-gray-200 text-lg px-4"
+              >
+                {rotatingTexts[currentIndex]}
+              </motion.p>
+            )}
           </AnimatePresence>
         </div>
 

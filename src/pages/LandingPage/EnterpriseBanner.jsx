@@ -1,18 +1,21 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import bannerImage from "../../assets/enterprice.jpg";
 
 // Lucide Icons
 import { Wrench, ClipboardCheck, Handshake } from "lucide-react";
 
 const EnterpriseBanner = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <section className="max-w-7xl mx-auto my-10 px-4">
+    <section ref={ref} className="max-w-7xl mx-auto my-10 px-4">
       <div className="bg-[#17453b] rounded-2xl overflow-hidden flex flex-col md:flex-row">
         {/* Left Side */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8 }}
           className="flex-1 p-6 md:p-10 text-white"
         >
@@ -22,13 +25,14 @@ const EnterpriseBanner = () => {
 
           <h1 className="text-2xl md:text-4xl font-bold leading-snug mb-5">
             This is how <br />
-            <span className="text-green-400">good companies</span><br />
+            <span className="text-green-400">good companies</span>
+            <br />
             <span className="text-green-400">find good company.</span>
           </h1>
 
           <p className="text-sm md:text-base mb-6">
-            Access the top 1% of talent on AfriTask, and a full suite of hybrid workforce
-            management tools. This is how innovation works now.
+            Access the top 1% of talent on AfriTask, and a full suite of hybrid
+            workforce management tools. This is how innovation works now.
           </p>
 
           <ul className="space-y-3 text-sm md:text-base">
@@ -59,7 +63,7 @@ const EnterpriseBanner = () => {
         {/* Right Side */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
+          animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.8 }}
           className="flex-1"
         >

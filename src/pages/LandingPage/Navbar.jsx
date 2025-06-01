@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 
 const Navbar = () => {
@@ -7,20 +8,17 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'Browse Jobs', href: '#' },
-    { name: 'Post a Job', href: '#' },
-    { name: 'How it Works', href: '#' },
-    { name: 'Contact', href: '#' },
+    { name: 'Home', path: '/' },
+    { name: 'Hire A talent', path: '/jobowner/talent' },
+    { name: 'Browse Jobs', path: '/freelance/findtask' },
+    { name: 'Post a Job', path: '/jobowner/posttask' },
+    { name: 'How it Works', path: '/how-it-works' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 10);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -39,33 +37,39 @@ const Navbar = () => {
         <div className="px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <img
-              src={logo}
-              alt="AfriTask Logo"
-              className="h-14 w-auto object-contain"
-            />
+            <Link to="/">
+              <img
+                src={logo}
+                alt="AfriTask Logo"
+                className="h-14 w-auto object-contain"
+              />
+            </Link>
           </div>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex space-x-6 items-center text-xs">
             {navLinks.map((link) => (
-              <a
+              <NavLink
                 key={link.name}
-                href={link.href}
-                className="text-gray-700 hover:text-primary transition duration-300"
+                to={link.path}
+                className={({ isActive }) =>
+                  `text-gray-700 hover:text-primary transition duration-300 ${
+                    isActive ? 'font-semibold text-primary' : ''
+                  }`
+                }
               >
                 {link.name}
-              </a>
+              </NavLink>
             ))}
-            <a
-              href="#"
+            <Link
+              to="/login"
               className="bg-primary text-white px-4 py-2 rounded-xl hover:bg-primary-3 transition duration-300 text-sm"
             >
               Get Started
-            </a>
+            </Link>
           </nav>
 
-          {/* Mobile menu button */}
+          {/* Mobile Menu Toggle */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -80,20 +84,26 @@ const Navbar = () => {
         {isOpen && (
           <div className="md:hidden bg-white px-6 py-4 space-y-4 shadow-md text-xs rounded-b-2xl">
             {navLinks.map((link) => (
-              <a
+              <NavLink
                 key={link.name}
-                href={link.href}
-                className="block text-gray-700 hover:text-primary transition duration-300"
+                to={link.path}
+                onClick={() => setIsOpen(false)}
+                className={({ isActive }) =>
+                  `block text-gray-700 hover:text-primary transition duration-300 ${
+                    isActive ? 'font-semibold text-primary' : ''
+                  }`
+                }
               >
                 {link.name}
-              </a>
+              </NavLink>
             ))}
-            <a
-              href="#"
+            <Link
+              to="/login"
+              onClick={() => setIsOpen(false)}
               className="block bg-primary text-white text-center px-4 py-2 rounded-xl hover:bg-primary-3 transition duration-300 text-sm"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         )}
       </header>

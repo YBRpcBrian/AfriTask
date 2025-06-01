@@ -1,25 +1,25 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ShieldCheck, Banknote, BadgeCheck } from 'lucide-react';
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { ShieldCheck, Banknote, BadgeCheck } from "lucide-react";
 
 const benefits = [
   {
-    title: 'Local Payments',
+    title: "Local Payments",
     icon: <Banknote size={32} className="text-primary" />,
     description:
-      'Pay and get paid seamlessly using MTN MoMo, Orange Money, and other local options across Africa.',
+      "Pay and get paid seamlessly using MTN MoMo, Orange Money, and other local options across Africa.",
   },
   {
-    title: 'Trusted Escrow',
+    title: "Trusted Escrow",
     icon: <ShieldCheck size={32} className="text-primary" />,
     description:
-      'We secure your funds in escrow and only release them when the job is completed and approved.',
+      "We secure your funds in escrow and only release them when the job is completed and approved.",
   },
   {
-    title: 'Verified Accounts',
+    title: "Verified Accounts",
     icon: <BadgeCheck size={32} className="text-primary" />,
     description:
-      'All users go through a verification process to build trust and prevent fraud on the platform.',
+      "All users go through a verification process to build trust and prevent fraud on the platform.",
   },
 ];
 
@@ -31,20 +31,22 @@ const fadeInUp = {
     transition: {
       delay: i * 0.2,
       duration: 0.6,
-      ease: 'easeOut',
+      ease: "easeOut",
     },
   }),
 };
 
 const Benefits = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <section className="py-20 bg-gray-50">
+    <section ref={ref} className="py-20 bg-gray-50">
       <div className="max-w-6xl mx-auto px-4 text-center">
         <motion.h2
           className="text-3xl font-bold mb-4"
           initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
           Why Choose AfriTask?
@@ -52,8 +54,7 @@ const Benefits = () => {
         <motion.p
           className="text-gray-600 mb-12 max-w-2xl mx-auto"
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           Empowering freelancers and businesses across Africa with secure,
@@ -66,8 +67,7 @@ const Benefits = () => {
               key={benefit.title}
               className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition duration-300"
               initial="hidden"
-              whileInView="show"
-              viewport={{ once: true }}
+              animate={isInView ? "show" : "hidden"}
               custom={i}
               variants={fadeInUp}
             >

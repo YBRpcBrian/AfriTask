@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Wallet2, Hourglass, Banknote, Search, Filter, CheckCircle, Clock } from "lucide-react";
 import Deposit from "./Deposit";
 import Withdraw from "./Withdraw";
+import logo from "../../../assets/logowhite.png"
 
 const transactions = [
   { id: 1, date: "2025-03-20", type: "Deposit", amount: "100,000 FCFA", status: "Completed" },
@@ -23,32 +24,30 @@ const Wallet = () => {
   );
 
   return (
-    <div className="w-[95%] mx-auto pb-12">
+    <div className=" pb-12">
       {/* Wallet Balance Section */}
-      <div className="rounded-b-4xl text-white bg-primary p-8">
+      <div className="rounded-b-4xl text-white bg-primary-3 p-8 pt-36">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
           <div className="flex flex-col items-center">
-            <Wallet2 size={50} className="text-primary-2 mb-2" />
-            <h1 className="text-4xl sm:text-5xl font-bold mb-1">200,000 FCFA</h1>
+            <Wallet2 size={50} className="text-primary mb-2" />
+            <h1 className="text-3xl sm:text-4xl font-bold mb-1">200,000 FCFA</h1>
             <span className="text-lg text-primary-2">Total Balance</span>
           </div>
           <div className="flex flex-col items-center">
-            <Hourglass size={50} className="text-primary-2 mb-2" />
-            <h1 className="text-4xl sm:text-5xl font-bold mb-1">100,000 FCFA</h1>
+            <Hourglass size={50} className="text-primary mb-2" />
+            <h1 className="text-3xl sm:text-4xl font-bold mb-1">100,000 FCFA</h1>
             <span className="text-lg text-primary-2">Pending Money</span>
           </div>
           <div className="flex flex-col items-center">
-            <Banknote size={50} className="text-primary-2 mb-2" />
-            <h1 className="text-4xl sm:text-5xl font-bold mb-1">700,000 FCFA</h1>
+            <Banknote size={50} className="text-primary mb-2" />
+            <h1 className="text-3xl sm:text-4xl font-bold mb-1">700,000 FCFA</h1>
             <span className="text-lg text-primary-2">Withdrawn</span>
           </div>
         </div>
 
         {/* Wallet Branding */}
         <div className="flex justify-center items-center mt-16 text-3xl sm:text-4xl font-semibold">
-          <h1>Afri</h1>
-          <h1 className="text-primary-2">Task</h1>
-          <h1>Wallet</h1>
+          <img src={logo} className="h-auto w-44" alt="" />
         </div>
       </div>
 

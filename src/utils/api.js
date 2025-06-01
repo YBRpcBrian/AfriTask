@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://afritask-backend.onrender.com", // Change this to your backend URL
+  baseURL: "http://localhost:5000", // Change this to your backend URL
   headers: {
     "Content-Type": "application/json",
   },

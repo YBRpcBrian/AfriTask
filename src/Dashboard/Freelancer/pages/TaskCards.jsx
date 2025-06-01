@@ -1,7 +1,14 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Heart } from "lucide-react";
 
 const TaskCards = ({ img, title, shortDescription, price }) => {
+  const navigate = useNavigate();
+
+  const handleTakeTask = () => {
+    navigate("/freelance/singletask");
+  };
+
   return (
     <div className="flex flex-col bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 h-full group">
       {/* Image Section */}
@@ -24,7 +31,10 @@ const TaskCards = ({ img, title, shortDescription, price }) => {
 
       {/* Action Bar */}
       <div className="px-4 py-2 bg-gray-50 flex justify-between items-center border-t">
-        <button className="text-xs px-3 py-1.5 bg-primary text-white rounded-full hover:bg-primary/80 transition-all duration-200">
+        <button
+          onClick={handleTakeTask}
+          className="text-xs px-3 py-1.5 bg-primary text-white rounded-full hover:bg-primary/80 transition-all duration-200"
+        >
           Take
         </button>
         <Heart className="w-4 h-4 text-gray-500 hover:text-primary cursor-pointer transition-colors duration-200" />

@@ -6,6 +6,7 @@ import profileFallback from "../../assets/profile.jpg";
 import { Menu, X, Search, Home, CreditCard } from "lucide-react";
 
 const menuLinks = [
+  
   {
     name: "Find Task",
     path: "/freelance/findtask",
@@ -13,13 +14,18 @@ const menuLinks = [
   },
   {
     name: "Deliver Task",
-    path: "/freelance/delivertask",
+    path: "/freelance/takentask",
     icon: <Home size={22} className="text-gray-700" />,
   },
   {
     name: "Wallet",
     path: "/freelance/wallet",
     icon: <CreditCard size={22} className="text-gray-700" />,
+  },
+  {
+    name: "Learn",
+    path: "/freelance/learn",
+    icon: <Search size={22} className="text-gray-700" />,
   },
 ];
 

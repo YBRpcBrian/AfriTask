@@ -14,6 +14,10 @@ import PaymentSuccesPage from "./pages/PaymentSuccesPage";
 import Footer from "./components/Footer";
 import SingleTaskPage from "./Dashboard/Freelancer/pages/SingleTaskPage";
 import TakenTask from "./Dashboard/Freelancer/pages/TakenTask";
+import MyLearningDashboard from "./Dashboard/Freelancer/pages/My Learning/MyLearningDashboard";
+import TalentHunt from "./Dashboard/JobOwner/pages/TalentHunt";
+import DepositePage from "./Dashboard/Freelancer/pages/My Learning/DepositePage";
+import WithdrawalSuccess from "./Dashboard/Freelancer/pages/WithdrwalSuccess";
 
 function App() {
   const user = useSelector((state) => state.auth?.user); // Get authenticated user
@@ -36,8 +40,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/success" element={<PaymentSuccesPage />} />
-        <Route path="/singletask" element={<SingleTaskPage />} />
-        <Route path="/takentask" element={<TakenTask />} />
+        
+        
+        
+        <Route path="/deposit" element={<DepositePage />} />
+        <Route path="/withdraw-success" element={<WithdrawalSuccess />} />
+        
+        
         
       
         {/* Protected Routes (with top margin only if user is logged in) */}
@@ -48,16 +57,20 @@ function App() {
               <>
                 <Route path="/freelance/findtask" element={<div className=""><FindTask /></div>} />
                 <Route path="/freelance/delivertask" element={<div className=""><DeliverTask /></div>} />
+                <Route path="/freelance/takentask" element={<TakenTask />} />
+                <Route path="/freelance/singletask" element={<SingleTaskPage />} />
                 <Route path="/freelance/wallet" element={<div className=""><Wallet /></div>} />
+                <Route path="/freelance/learn" element={<MyLearningDashboard />} />
               </>
             )}
 
             {/* Job Owner Routes */}
             {isJobOwner && (
               <>
-                <Route path="/jobowner/posttask" element={<div className="mt-16"><PostTask /></div>} />
-                <Route path="/jobowner/makepayments" element={<div className="mt-16"><MakePayments /></div>} />
-                <Route path="/jobowner/wallet" element={<div className="mt-16"><Wallet /></div>} />
+                <Route path="/jobowner/posttask" element={<div className=""><PostTask /></div>} />
+                <Route path="/jobowner/talent" element={<TalentHunt />} />
+                <Route path="/jobowner/makepayments" element={<div className=""><MakePayments /></div>} />
+                <Route path="/jobowner/wallet" element={<div className=""><Wallet /></div>} />
               </>
             )}
           </>
